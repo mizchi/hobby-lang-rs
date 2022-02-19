@@ -1,6 +1,7 @@
 /target
+crates/*/target
+crates/*/pkg
 **/*.rs.bk
 Cargo.lock
-bin/
-pkg/
+bin
 wasm-pack.log

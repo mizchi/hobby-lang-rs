@@ -1,0 +1,9 @@
+[package]
+name = "mizl_parser"
+version = "0.1.0"
+authors = ["mizchi <miz404@gmail.com>"]
+edition = "2021"
+
+[profile.release]
+# Tell `rustc` to optimize for small code size.
+opt-level = "s"

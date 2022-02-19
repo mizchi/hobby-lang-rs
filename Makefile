@@ -1,5 +1,3 @@
-build:
-	wasm-pack build --out-name mod --target web --release -- --features wee_alloc
+build-wasm:
+	cd crates/wasm && make build
 
-run: build
-	deno run --allow-read run.ts
