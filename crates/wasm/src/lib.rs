@@ -1,9 +1,5 @@
-mod utils;
-
 use wasm_bindgen::prelude::*;
-
-// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-// allocator.
+use mizl_parser;
 
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
@@ -16,11 +12,24 @@ extern "C" {
 }
 
 #[wasm_bindgen]
-pub fn run() {
-    log("Hello, mylang!");
+pub fn parse(input: &str) -> JsValue {
+    let (_str, color) = mizl_parser::hex_color(input).unwrap();
+    JsValue::from_serde(&color).unwrap()
 }
 
 #[wasm_bindgen]
 pub fn setup() {
-    utils::set_panic_hook();
+    #[cfg(feature = "console_error_panic_hook")]
+    console_error_panic_hook::set_once();
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use wasm_bindgen_test::wasm_bindgen_test;
+    #[wasm_bindgen_test]
+    fn pass() {
+        let (_str, color) = mizl_parser::hex_color("#ff0000").unwrap();
+        assert_eq!(color.r, 255);
+    }
 }
