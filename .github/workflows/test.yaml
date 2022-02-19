@@ -2,7 +2,7 @@ on:
   pull_request:
 
 jobs:
-  build_cache:
+  test:
     runs-on: ubuntu-latest
     env:
       RUSTC_FORCE_INCREMENTAL: 1
@@ -28,8 +28,6 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: check
-      # for chrome
-      # - uses: nanasess/setup-chromedriver@master
       - name: setup wasm-pack
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
       - name: parser test
