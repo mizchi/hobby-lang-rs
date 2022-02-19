@@ -1,6 +1,5 @@
 use wasm_bindgen::prelude::*;
 use mizl_parser;
-use serde;
 
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]

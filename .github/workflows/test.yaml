@@ -45,11 +45,3 @@ jobs:
       - name: deno test
         run: deno test --allow-read ./pkg .
         working-directory: crates/wasm
-      # - name: fmt
-      #   run: cargo fmt --all -- --check
-      #   working-directory: server
-      # - run: rustup component add clippy
-      # - uses: ./.github/actions/cache_cargo
-      # - name: clippy
-      #   run: cargo clippy --all-targets --all-features -- -D warnings
-      #   working-directory: server
