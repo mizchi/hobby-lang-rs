@@ -1,5 +1,5 @@
 [package]
-name = "mizl-wasm"
+name = "mizl_wasm"
 version = "0.1.0"
 authors = ["mizchi <miz404@gmail.com>"]
 edition = "2021"

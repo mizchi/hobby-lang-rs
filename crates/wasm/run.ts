@@ -2,4 +2,5 @@ import ready, { setup, run } from "./pkg/mod.js";
 
 await ready();
 setup();
-run();
+const out = run();
+console.log('out', out);
