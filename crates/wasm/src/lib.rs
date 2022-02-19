@@ -1,5 +1,6 @@
 use wasm_bindgen::prelude::*;
-use mizl_parser::parse;
+use mizl_parser;
+use serde;
 
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
@@ -12,8 +13,9 @@ extern "C" {
 }
 
 #[wasm_bindgen]
-pub fn run() -> i32 {
-    parse("#2F14DF")
+pub fn parse(input: &str) -> JsValue {
+    let (_str, color) = mizl_parser::hex_color(input).unwrap();
+    JsValue::from_serde(&color).unwrap()
 }
 
 #[wasm_bindgen]
@@ -28,6 +30,7 @@ mod tests {
     use wasm_bindgen_test::wasm_bindgen_test;
     #[wasm_bindgen_test]
     fn pass() {
-        assert_eq!(run(), 7);
+        let (_str, color) = mizl_parser::hex_color("#ff0000").unwrap();
+        assert_eq!(color.r, 255);
     }
 }

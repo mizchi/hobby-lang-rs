@@ -30,6 +30,9 @@ jobs:
           command: check
       - name: setup wasm-pack
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
       - name: parser test
         run: cargo test
         working-directory: crates/parser
@@ -38,6 +41,9 @@ jobs:
         working-directory: crates/wasm
       - name: wasm test
         run: make test
+        working-directory: crates/wasm
+      - name: deno test
+        run: deno test --allow-read ./pkg .
         working-directory: crates/wasm
       # - name: fmt
       #   run: cargo fmt --all -- --check
