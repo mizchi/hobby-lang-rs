@@ -1,5 +1,5 @@
 pub fn parse(str: &str) -> i32 {
-  str.len() as i32
+    str.len() as i32
 }
 
 #[cfg(test)]

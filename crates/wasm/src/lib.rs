@@ -10,14 +10,13 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-extern {
+extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     fn log(s: &str);
 }
 
 #[wasm_bindgen]
 pub fn run() {
-    
     log("Hello, mylang!");
 }
 

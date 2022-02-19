@@ -1,0 +1,51 @@
+on:
+  pull_request:
+
+jobs:
+  build_cache:
+    runs-on: ubuntu-latest
+    env:
+      RUSTC_FORCE_INCREMENTAL: 1
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+          target: wasm32-unknown-unknown
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            server/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
+      - name: Run cargo check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+      # for chrome
+      # - uses: nanasess/setup-chromedriver@master
+      - name: setup wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - name: parser test
+        run: cargo test
+        working-directory: crates/parser
+      - name: wasm build
+        run: make build
+        working-directory: crates/wasm
+      - name: wasm test
+        run: make test
+        working-directory: crates/wasm
+      # - name: fmt
+      #   run: cargo fmt --all -- --check
+      #   working-directory: server
+      # - run: rustup component add clippy
+      # - uses: ./.github/actions/cache_cargo
+      # - name: clippy
+      #   run: cargo clippy --all-targets --all-features -- -D warnings
+      #   working-directory: server
